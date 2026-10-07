@@ -23,11 +23,17 @@
   <main>
     <section id="editor-view" aria-labelledby="editor-heading">
       <div class="heading-row">
-        <div><p id="editor-date" class="date"></p><h1 id="editor-heading">今日のメモ</h1></div>
-        <button id="today-button" class="text-button" hidden>今日に戻る</button>
+        <div><p id="editor-date" class="date"></p><h1 id="editor-heading">新しいメモ</h1></div>
+        <button id="new-button" class="secondary">＋ 新規</button>
       </div>
       <label for="note-body" class="sr-only">メモ本文</label>
       <textarea id="note-body" autofocus placeholder="思いついたことを、そのまま。" maxlength="100000" spellcheck="false" disabled></textarea>
+      <div class="tag-editor">
+        <div id="selected-tags" class="tag-list" aria-label="このメモのタグ"></div>
+        <div class="tag-input-row"><label for="tag-input" class="sr-only">タグを追加</label><input id="tag-input" list="tag-options" placeholder="タグを追加（例：記事ネタ）" maxlength="30" autocomplete="off"><datalist id="tag-options"></datalist><button id="add-tag" class="secondary">追加</button></div>
+        <p id="tag-error" class="error" role="alert" hidden></p>
+        <details id="tag-library" hidden><summary>登録済みタグから選ぶ</summary><div id="tag-suggestions" class="tag-list"></div></details>
+      </div>
       <div class="save-row">
         <div><p id="save-status" class="status" role="status">メモを読み込んでいます…</p><p id="count" class="count">0文字</p></div>
         <button id="save-button" class="primary" disabled>保存する</button>
@@ -53,6 +59,7 @@
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
         <input type="search" id="search" placeholder="メモを検索" maxlength="200" autocomplete="off">
       </form>
+      <label for="tag-filter" class="sr-only">タグで絞り込み</label><select id="tag-filter" class="tag-filter" hidden><option value="">すべてのタグ</option></select>
       <p id="list-status" class="list-status" role="status"></p>
       <div id="history-error" class="error" role="alert" hidden></div>
       <button id="list-retry" class="secondary" hidden>再読み込み</button>
@@ -68,8 +75,8 @@
   <dialog id="import-dialog" aria-labelledby="import-heading">
     <h2 id="import-heading">JSONのメモを読み込む</h2>
     <p id="import-summary" class="dialog-caption"></p>
-    <p id="import-policy" class="dialog-caption">同じ日付のメモは、この端末の本文を残します。</p>
-    <label id="overwrite-option" class="overwrite-option"><input type="checkbox" id="overwrite">同じ日付をファイルの本文に置き換える</label>
+    <p id="import-policy" class="dialog-caption">同じノートは、この端末の本文を残します。</p>
+    <label id="overwrite-option" class="overwrite-option"><input type="checkbox" id="overwrite">同じノートをファイルの本文・タグに置き換える</label>
     <p id="import-dialog-error" class="error" role="alert" hidden></p>
     <div class="dialog-actions"><button id="cancel-import" class="secondary">キャンセル</button><button id="confirm-import" class="primary">読み込む</button></div>
   </dialog>
